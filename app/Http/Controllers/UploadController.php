@@ -25,10 +25,10 @@ class UploadController extends Controller
             $asset_type = [
                 'Laptop' => 'AZLAP',
                 'Desktop' => 'AZDTC',
-                'Tablet' => 'AD-IE-',
+                'Tablet' => 'AZTAB',
                 'Monitor' => 'AZDTC',
-                'Mobile' => 'AMOB',
-                'Sim' => 'ASIM'
+                'Mobile' => 'AZMOB',
+                'Sim' => // 0501231231
             ][$table];
 
             $assets = [];
