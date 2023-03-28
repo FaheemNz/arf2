@@ -49,7 +49,7 @@
 
                 <div class="form">
                     <i class="fa fa-search"></i>
-                    <input required type="text" name="search_main" class="form-control form-input" placeholder="Search ARF">
+                    <input required type="text" name="search_main" class="form-control form-input" placeholder="Enter Employee ID">
                     <span class="left-pan"><i class="fa fa-microphone"></i></span>
                 </div>
 
@@ -268,10 +268,6 @@
                     </div>
                 </div>
                 @endforeach
-                @else 
-                <div class="text-warning text-center">
-                    <h2>No Results Found..</h2>
-                </div>
                 @endif
             </div>
         </div>

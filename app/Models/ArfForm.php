@@ -10,6 +10,7 @@ class ArfForm extends Model
     use HasFactory;
     
     protected $guarded = [];
+    public $additional_attributes = ['details'];
 
     protected $with = ['laptops', 'sims', 'tablets', 'monitors'];
     
@@ -80,5 +81,11 @@ class ArfForm extends Model
     public static function getDesktopBrands()
     {
         return ['HP', 'Dell', 'Apple'];
+    }
+
+    // Accessors
+    public function getDetailsAttribute()
+    {
+        return "Arf Form: {$this->id} ::: Username: {$this->name} ::: Emp ID:{$this->emp_id}";
     }
 }

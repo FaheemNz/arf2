@@ -21,8 +21,7 @@ class SearchController extends Controller
 
         $query = ArfForm::query();
 
-        $query = $query->where('name', 'LIKE', '%' . $request->search_main . '%')
-                       ->orWhere('email', 'LIKE', '%' . $request->search_main . '%');
+        $query = $query->where('emp_id', '=', $request->search_main);
                        
         
         $query = $query->get();

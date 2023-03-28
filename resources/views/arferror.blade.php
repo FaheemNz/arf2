@@ -105,9 +105,5 @@ button {
     <span class="message" id="js-error"></span> 
     <span class="message" id="js-apology"></span>
     <div><span id="js-hidden">{{ isset($message) ? $message : 'Some Error Occured.' }}</span></div>
-    <br />
-    <div class="one">
-        <a href="#"><button class="curve">Close this Page</button></a>
-    </div>
   </div>
 </section>

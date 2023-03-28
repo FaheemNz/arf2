@@ -32,14 +32,15 @@ class SuccessController extends Controller
                     'title' => 'Invalid Token',
                     'message' => 'The Verification token is not valid'
                 ]);
-                
-                return;
             }
             
             if($verification->user_has_verified == true){
                 LogActivity::add('Email Already Verified', 'User tried to verified the Email Again', 0, 'User_Token: ' . $token);
                 
-                return view('success');
+                return view('arferror', [
+                    'title' => 'Email Already verified',
+                    'message' => 'You have already verified the email.'
+                ]);
             }
             
             $arf = ArfForm::where('id', $verification->arf_form_id)->first();
