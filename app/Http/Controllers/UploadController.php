@@ -11,11 +11,26 @@ class UploadController extends Controller
 {
     public function index(Request $request)
     {
+        if( ! auth()->user()->hasRole('admin') ){
+            return redirect('/');
+        }
+
         return view('arf_form.upload');
     }
 
     public function create(Request $request)
     {
+        if( ! auth()->user()->hasRole('admin') ){
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to perform this action'
+            ]);
+        }
+
+        Log::info('### Asset Upload Start ###', [
+            'Request' => json_encode( $request->all() )
+        ]);
+
         try {
             $from = $request->input('asset_from');
             $number_of_assets   = $request->input('number_of_assets');
@@ -28,7 +43,7 @@ class UploadController extends Controller
                 'Tablet' => 'AZTAB',
                 'Monitor' => 'AZDTC',
                 'Mobile' => 'AZMOB',
-                'Sim' => // 0501231231
+                'Sim' => ''// 0501231231
             ][$table];
 
             $assets = [];
@@ -53,7 +68,7 @@ class UploadController extends Controller
             return back()->with('success', 'Assets have been uploaded successfully');
 
         } catch(\Exception $exception){
-            LogActivity::add('Asset_Upload_Failre', json_encode(Helper::getErrorDetails($exception)), 0, 'Admin');
+            LogActivity::add('Asset_Upload_Failure', json_encode(Helper::getErrorDetails($exception)), 0, 'Admin');
 
             return back()->withErrors([$exception->getMessage()]);
         }

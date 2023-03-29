@@ -13,6 +13,7 @@ use App\Models\LogActivity;
 use App\Models\OfficeLocation;
 use App\Services\ArfFormService;
 use App\Services\Helper;
+use Illuminate\Support\Facades\Log;
 
 class ArfFormController extends Controller
 {
@@ -29,8 +30,19 @@ class ArfFormController extends Controller
         ]);
     }
 
-    public function create(ArfFormRequest $arfFormRequest)
+    public function create(ArfFormRequest $arfFormRequest, ArfForm $arfForm)
     {
+        if( ! auth()->user()->can('add', $arfForm) ){
+            return redirect()
+                    ->back()
+                    ->withErrors(['You are not authorized to create ARF Form']);
+        }
+
+        Log::info('### ARF Form Created ###', [
+            'Username' => auth()->user()->name,
+            'Time'     => now()
+        ]);
+
         try {
             $arfData = $arfFormRequest->validated();
             
@@ -56,6 +68,11 @@ class ArfFormController extends Controller
     
     public function edit(Request $request, int $id)
     {
+        Log::info('### ARF Form Edited ###', [
+            'Username' => auth()->user()->name,
+            'Time'     => now()
+        ]);
+
         $arf = ArfForm::findOrFail($id);
         $departments = Department::all();
 
@@ -67,6 +84,11 @@ class ArfFormController extends Controller
 
     public function update(ArfFormUpdateRequest $arfFormUpdateRequest)
     {
+        Log::info('### ARF Form Updated ###', [
+            'Username' => auth()->user()->name,
+            'Time'     => now()
+        ]);
+
         return back()->with('success', 'ARF has been updated successfully');
     }
 }

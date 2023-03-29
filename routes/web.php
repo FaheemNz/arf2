@@ -53,7 +53,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/upload-assets', [UploadController::class, 'create'])->name('arfform.upload');
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'password.request' => false
+]);
 
 Route::get('/verify/{token}', [SuccessController::class, 'index'])->middleware('throttle:4,10');
 

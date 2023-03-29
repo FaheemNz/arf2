@@ -52,9 +52,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if( auth()->user()->hasRole('admin') )
                                 <a class="dropdown-item" href="/admin" target="_blank">
                                     Admin Panel
                                 </a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

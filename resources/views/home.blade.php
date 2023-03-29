@@ -143,11 +143,13 @@
 
 <div class="container">
     <div class="row1-container text-center">
+        @if( auth()->user()->hasRole('admin') )
         <div class="box red box-down">
             <h2>ARF Form</h2>
             <div><input type="text" id="arf-update" placeholder="Enter ARF Form ID" class="form-control"></div>
             <button type="button" class="btn btn-primary btn-sm mt-3" onclick="updateArfForm()">View</a>
         </div>
+        @endif
 
         <div class="box cyan">
             <h2>ARF Form</h2>
@@ -155,18 +157,22 @@
             <a href="/arf-new" class="btn btn-primary">New Form</a>
         </div>
 
+        @if( auth()->user()->hasRole('admin') )
         <div class="box box-down blue">
             <h2>Admin Panel</h2>
             <p><a href="/admin" target="_blank">Open Admin Control</a></p>
             <img src="https://assets.codepen.io/2301174/icon-calculator.svg" alt="">
         </div>
+        @endif
     </div>
     <div class="row2-container">
+        @if( auth()->user()->hasRole('admin') )
         <div class="box orange text-center">
             <h2>Upload</h2>
             <p><a href="/upload-assets" target="_blank">Upload Assets </a></p>
             <img src="https://assets.codepen.io/2301174/icon-karma.svg" alt="">
         </div>
+        @endif
     </div>
 </div>
 
