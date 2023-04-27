@@ -150,7 +150,8 @@ return [
             'App\\Widgets\\Desktops',
             'App\\Widgets\\Monitors',
             'App\\Widgets\\Mobiles',
-            'App\\Widgets\\Sims'
+            'App\\Widgets\\Sims',
+            'App\\Widgets\\Tablets'
         ],
 
     ],

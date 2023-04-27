@@ -167,11 +167,18 @@
     </div>
     <div class="row2-container">
         @if( auth()->user()->hasRole('admin') )
+        @if( auth()->user()->name == 'Shakeel' )
         <div class="box orange text-center">
             <h2>Upload</h2>
             <p><a href="/upload-assets" target="_blank">Upload Assets </a></p>
             <img src="https://assets.codepen.io/2301174/icon-karma.svg" alt="">
         </div>
+        @else
+        <div class="box orange text-center">
+            <h2>Report</h2>
+            <p><a href="/report" target="_blank">Report </a></p>
+            <im
+        @endif
         @endif
     </div>
 </div>

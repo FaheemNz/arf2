@@ -56,6 +56,12 @@
                                 <a class="dropdown-item" href="/admin" target="_blank">
                                     Admin Panel
                                 </a>
+                                <a class="dropdown-item" href="/report" target="_blank">
+                                    Report
+                                </a>
+                                <a class="dropdown-item" href="/search" target="_blank">
+                                    Search
+                                </a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -83,6 +89,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    @yield('javascript')
 </body>
 
 </html>

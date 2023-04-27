@@ -44,17 +44,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="{{ route('arfform.search') }}" method="POST">
-                @csrf
-
+            <form action="{{ route('arfform.search') }}" method="GET">
                 <div class="form">
                     <i class="fa fa-search"></i>
-                    <input required type="text" name="search_main" class="form-control form-input" placeholder="Enter Employee ID">
-                    <span class="left-pan"><i class="fa fa-microphone"></i></span>
+                    <input required type="text" value="{{ $search_main }}" name="search_main" class="form-control form-input" placeholder="Enter Employee ID / Name">
+                    
                 </div>
 
                 <div class="text-end mt-3">
-                    <button type="clear" class="btn btn-outline-secondary">Clear</button>
+                    <button type="button" onclick="window.location.href = '/search'" class="btn btn-outline-secondary">Refresh</button>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
@@ -91,24 +89,7 @@
                             </tbody>
                         </table>
 
-                        <h5 class="search-heading-md">User Information</h5>
-                        <table class="table table-secondary table-responsive table-bordered table-sm">
-                            <thead>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Office Location</th>
-                                <th>Dept</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ $result->name }}</td>
-                                    <td>{{ $result->email }}</td>
-                                    <td>{{ $result->office_location_id }}</td>
-                                    <td>{{ $result->department_id }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                        @if( count($result->laptops) > 0 )
                         <h5 class="search-heading-md">Laptops</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -123,7 +104,7 @@
                                 <tr>
                                     <td>{{ $result_laptop->asset_code }}</td>
                                     <td>{{ $result_laptop->asset_brand }}</td>
-                                    <td>{{ $result_laptop->date_issued }}</td>
+                                    <td>{{ $result_laptop->created_at }}</td>
                                     <td>{{ $result_laptop->remarks }}</td>
                                     <td>{{ $result_laptop->status }}</td>
                                 </tr>
@@ -134,7 +115,9 @@
                                 @endforelse 
                             </tbody>
                         </table>
+                        @endif
                         
+                        @if( count($result->desktops) > 0 )
                         <h5 class="search-heading-md">Desktops</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -149,7 +132,7 @@
                                 <tr>
                                     <td>{{ $result_desktop->asset_code }}</td>
                                     <td>{{ $result_desktop->asset_brand }}</td>
-                                    <td>{{ $result_desktop->date_issued }}</td>
+                                    <td>{{ $result_desktop->created_at }}</td>
                                     <td>{{ $result_desktop->remarks }}</td>
                                     <td>{{ $result_desktop->status }}</td>
                                 </tr>
@@ -160,7 +143,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        @endif
                         
+                        @if( count($result->monitors) > 0 )
                         <h5 class="search-heading-md">Monitors</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -175,7 +160,7 @@
                                 <tr>
                                     <td>{{ $result_monitor->asset_code }}</td>
                                     <td>{{ $result_monitor->asset_brand }}</td>
-                                    <td>{{ $result_monitor->date_issued }}</td>
+                                    <td>{{ $result_monitor->created_at }}</td>
                                     <td>{{ $result_monitor->remarks }}</td>
                                     <td>{{ $result_monitor->status }}</td>
                                 </tr>
@@ -186,7 +171,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        @endif
                         
+                        @if( count($result->tablets) > 0 )
                         <h5 class="search-heading-md">Tablets</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -201,7 +188,7 @@
                                 <tr>
                                     <td>{{ $result_tablet->asset_code }}</td>
                                     <td>{{ $result_tablet->asset_brand }}</td>
-                                    <td>{{ $result_tablet->date_issued }}</td>
+                                    <td>{{ $result_tablet->created_at }}</td>
                                     <td>{{ $result_tablet->remarks }}</td>
                                     <td>{{ $result_tablet->status }}</td>
                                 </tr>
@@ -212,7 +199,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        @endif
                         
+                        @if( count($result->sims) > 0 )
                         <h5 class="search-heading-md">Sims</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -227,7 +216,7 @@
                                 <tr>
                                     <td>{{ $result_sim->asset_code }}</td>
                                     <td>{{ $result_sim->asset_brand }}</td>
-                                    <td>{{ $result_sim->date_issued }}</td>
+                                    <td>{{ $result_sim->created_at }}</td>
                                     <td>{{ $result_sim->remarks }}</td>
                                     <td>{{ $result_sim->status }}</td>
                                 </tr>
@@ -238,7 +227,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        @endif
                         
+                        @if( count($result->mobiles) > 0 )
                         <h5 class="search-heading-md">Mobile</h5>
                         <table class="table table-success table-responsive table-bordered table-sm">
                             <thead>
@@ -253,7 +244,7 @@
                                 <tr>
                                     <td>{{ $result_mobile->asset_code }}</td>
                                     <td>{{ $result_mobile->asset_brand }}</td>
-                                    <td>{{ $result_mobile->date_issued }}</td>
+                                    <td>{{ $result_mobile->created_at }}</td>
                                     <td>{{ $result_mobile->remarks }}</td>
                                     <td>{{ $result_mobile->status }}</td>
                                 </tr>
@@ -264,7 +255,7 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        
+                        @endif
                     </div>
                 </div>
                 @endforeach

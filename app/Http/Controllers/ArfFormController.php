@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Verification;
 use Illuminate\Http\Request;
 use App\Jobs\ArfJob;
+use App\Jobs\ArfUpdateJob;
 use App\Models\LogActivity;
 use App\Models\OfficeLocation;
 use App\Services\ArfFormService;
@@ -68,27 +69,47 @@ class ArfFormController extends Controller
     
     public function edit(Request $request, int $id)
     {
-        Log::info('### ARF Form Edited ###', [
-            'Username' => auth()->user()->name,
-            'Time'     => now()
-        ]);
-
         $arf = ArfForm::findOrFail($id);
-        $departments = Department::all();
+
+        if($arf->status == 'In Active'){
+            return view('arferror', [
+                'title' => 'ARF Form In Active',
+                'message' => 'This ARF Form has been offboarded and is now In-Active'
+            ]);
+        }
 
         return view('arf_form.edit', [
-            'arf'           =>      $arf,
-            'departments'   =>      $departments
+            'arf'               =>      $arf,
+            'laptopBrands'      =>      ArfForm::getLaptopBrands(),
+            'desktopBrands'     =>      ArfForm::getDesktopBrands(),
+            'monitorBrands'     =>      ArfForm::getMonitorBrands(),
+            'tabletBrands'      =>      ArfForm::getTabletBrands(),
+            'simNetworks'       =>      ArfForm::getSimNetworks()
         ]);
     }
 
     public function update(ArfFormUpdateRequest $arfFormUpdateRequest)
     {
-        Log::info('### ARF Form Updated ###', [
-            'Username' => auth()->user()->name,
-            'Time'     => now()
-        ]);
-
-        return back()->with('success', 'ARF has been updated successfully');
+        try {
+            $arfData = $arfFormUpdateRequest->validated();
+            
+            $token = Verification::getToken();
+            
+            $body = [
+                'name'      =>      $arfData['arf_name'],
+                'email'     =>      $arfData['arf_email'],
+                'url'       =>      Verification::getUrl($token),
+                'items'     =>      ArfFormService::getItems($arfData)
+            ];
+            
+            dispatch(new ArfUpdateJob($body, $arfData, $token, $arfData['arf_id']));
+            
+            return back()->with('success', 'ARF Updated Successfully');
+            
+        } catch (\Exception $exception) {
+            LogActivity::add('Exception_Asset_Update', json_encode(Helper::getErrorDetails($exception)), $arfFormUpdateRequest['arf_id'], 'NULL_User');
+            
+            return back()->withErrors([$exception->getMessage()]);
+        }
     }
 }

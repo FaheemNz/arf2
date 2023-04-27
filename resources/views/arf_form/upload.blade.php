@@ -46,6 +46,10 @@
                     <input type="number" name="number_of_assets" class="form-control" id="number_of_assets" required>
                 </div>
                 <div class="col-md-12">
+                    <label for="inputPassword4" class="form-label">Paste Asset Codes</label>
+                    <textarea rows="4" name="asset_codes" class="form-control" id="asset_codes" disabled></textarea>
+                </div>
+                <div class="col-md-12">
                     <label for="inputPassword4" class="form-label">Asset Type</label>
                     <select class="form-control" name="asset_type" id="asset_type" required onchange="loadBrands(this)">
                         <option value="">Select</option>
@@ -53,6 +57,8 @@
                         <option value="Desktop">Desktop</option>
                         <option value="Monitor">Monitor</option>
                         <option value="Mobile">Mobile</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Sim">Sim</option>
                     </select>
                 </div>
                 <div class="col-md-12">
@@ -64,12 +70,6 @@
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>
             </form>
-
-            <br />
-
-            @if(isset($last_asset_number))
-            <div>Last Asset Number is: {{ $last_asset_number }}</div>
-            @endif
         </div>
     </div>
 </div>

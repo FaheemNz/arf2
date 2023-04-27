@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "laraveldaily/laravel-charts": "^0.1.29",
         "maatwebsite/excel": "^3.1",
         "tcg/voyager": "^1.6",
         "tu6ge/voyager-excel": "^2.2"

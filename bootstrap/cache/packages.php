@@ -64,6 +64,13 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
+  'laraveldaily/laravel-charts' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LaravelDaily\\LaravelCharts\\LaravelChartsServiceProvider',
+    ),
+  ),
   'maatwebsite/excel' => 
   array (
     'providers' => 

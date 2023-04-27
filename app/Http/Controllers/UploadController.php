@@ -20,45 +20,50 @@ class UploadController extends Controller
 
     public function create(Request $request)
     {
-        if( ! auth()->user()->hasRole('admin') ){
-            return response()->json([
-                'success' => false,
-                'message' => 'You are not authorized to perform this action'
-            ]);
-        }
-
-        Log::info('### Asset Upload Start ###', [
-            'Request' => json_encode( $request->all() )
-        ]);
-
         try {
             $from = $request->input('asset_from');
             $number_of_assets   = $request->input('number_of_assets');
             $table = $request->input('asset_type');
             $brand = $request->input('asset_brand');
+            $asset_codes = $request->input('asset_codes');
             
             $asset_type = [
-                'Laptop' => 'AZLAP',
-                'Desktop' => 'AZDTC',
-                'Tablet' => 'AZTAB',
-                'Monitor' => 'AZDTC',
-                'Mobile' => 'AZMOB',
-                'Sim' => ''// 0501231231
+                'Laptop'        =>      'AZLAP',
+                'Desktop'       =>      'AZDTC',
+                'Tablet'        =>      'AZTAB',
+                'Monitor'       =>      'AZDTC',
+                'Mobile'        =>      'AZMOB',
+                'Sim'           =>      'AZSIM'
             ][$table];
 
             $assets = [];
-
-            if(!$from || !$number_of_assets || !$table || !$brand){
-                return back()->withErrors(['Please fill all Fields']);
+            
+            if(!$table || !$brand){
+                return back()->withErrors(['Please fill Asset Type and Brand']);
             }
 
-            $to = $from + $number_of_assets;
+            if($asset_codes && !empty($asset_codes)){
+                $asset_codes = explode(',', $asset_codes);
+                
+                foreach($asset_codes as $ac){
+                    $assets[] = [
+                        'asset_code'  =>  $ac,
+                        'asset_brand' =>  $brand
+                    ];
+                }
+            } else {
+                if(!$from || !$number_of_assets){
+                    return back()->withErrors(['Please provide Number of Assets & From']);
+                }
 
-            foreach( range($from, $to) as $i ){
-                $assets[] = [
-                    'asset_code'  => $asset_type . $i,
-                    'asset_brand' => $brand
-                ];
+                $to = $from + $number_of_assets;
+
+                foreach( range($from, $to) as $i ){
+                    $assets[] = [
+                        'asset_code'  => $asset_type . $i,
+                        'asset_brand' => $brand
+                    ];
+                }
             }
 
             DB::table(strtolower($table) . 's')->insert($assets);
@@ -68,7 +73,7 @@ class UploadController extends Controller
             return back()->with('success', 'Assets have been uploaded successfully');
 
         } catch(\Exception $exception){
-            LogActivity::add('Asset_Upload_Failure', json_encode(Helper::getErrorDetails($exception)), 0, 'Admin');
+            LogActivity::add('Asset_Upload_Failre', json_encode(Helper::getErrorDetails($exception)), 0, 'Admin');
 
             return back()->withErrors([$exception->getMessage()]);
         }

@@ -26,8 +26,6 @@ class ArfFormUpdateRequest extends FormRequest
         return [
             'arf_id'                    =>      'required|exists:arf_forms,id',
             'arf_date'                  =>      'required|date',
-            'arf_dept'                  =>      'required|string|max:255',
-            'arf_office_location'       =>      'required|string|max:255',
             'arf_emp_id'                =>      'required|string',
             'arf_name'                  =>      'required|string|max:255',
             'arf_contact_details'       =>      'nullable|string|max:255',

@@ -8,26 +8,23 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    public function index()
-    {
-        return view('search');
-    }
-
-    public function view(Request $request)
+    public function index(Request $request)
     {
         $request->validate([
-            'search_main' => 'required|string|max:255'
+            'search_main' => 'nullable|string|max:255'
         ]);
 
         $query = ArfForm::query();
 
-        $query = $query->where('emp_id', '=', $request->search_main);
+        $query = $query->where('emp_id', '=', $request->search_main)
+                       ->orWhere('name', '=', $request->search_main);
                        
         
         $query = $query->get();
-        
+
         return view('search', [
-            'results' => $query
+            'results' => $query,
+            'search_main' => $request->search_main
         ]);
     }
     

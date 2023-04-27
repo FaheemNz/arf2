@@ -224,6 +224,16 @@ function loadBrands(elem){
         return;
     }
 
+    if(type == 'Tablet' || type == 'Sim'){
+        $('#asset_codes').prop('disabled', false);
+        $('#asset_from').prop('disabled', true);
+        $('#number_of_assets').prop('disabled', true);
+    } else {
+        $('#asset_codes').prop('disabled', true);
+        $('#asset_from').prop('disabled', false);
+        $('#number_of_assets').prop('disabled', false);
+    }
+
     assetBrand.empty();
 
     $.ajax({
