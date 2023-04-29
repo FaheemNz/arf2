@@ -10,6 +10,8 @@ class Tablet extends Model
     use HasFactory;
 
     protected $guarded = [];
+    public $allow_export_all = true;
+    public $export_handler = \App\Exports\TabletExport::class;
 
     public function arfForm()
     {
